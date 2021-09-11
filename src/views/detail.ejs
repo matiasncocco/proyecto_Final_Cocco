@@ -1,0 +1,202 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<script src="/js/gameShow.js" defer>    
+</script>
+<main class="main-main">
+    <section class="show-section">
+        <section class="show-img">
+            <img src="/img/products/<%= game.img %>">
+        </section>
+        <section class="show-main">
+            <header class="show-title show-title-game-title">
+                <h2 class="big-title">
+                    <%= game.title %>
+                </h2>
+                <h4 class="small-title">
+                    <%= game.title %>
+                </h4>
+            </header>
+            <article class="show-description">
+                <p id="shorten-description">
+                    <%= game.description %>
+                </p>
+                <a class="read-more-link" href="#read-more">
+                    MÁS INFO
+                </a>
+            </article>
+        </section>
+        <section class="show-category">
+            <header class="show-title category-title">
+                <h3 class="big-title">
+                    CATEGORÍAS
+                </h3>
+                <h6 class="small-title">
+                    CATEGORÍAS
+                </h6>
+            </header>
+            <article class="category-box">
+                <% game.categories.forEach(category => { %>
+                    <div class="category-single-box">
+                        <p class="category-text">
+                            <%= category.title %>
+                        </p>
+                    </div>
+                <% }) %>
+            </article>
+        <section class="show-category show-platforms">
+            <article class="category-box">
+                <div class="category-single-box">
+                    <p class="category-text">
+                        <i 
+                            class="<% game.platforms.forEach(platform => { %>
+                                <%= platform.title == 'WINDOWS' ? 'fab fa-windows' : null %>
+                            <% }) %>"
+                        ></i>
+                    </p>
+                </div>
+                <div class="category-single-box">
+                    <p class="category-text">
+                        <i 
+                            class="<% game.platforms.forEach(platform => { %>
+                                <%= platform.title == 'MAC OS' ? 'fab fa-apple' : null %>
+                            <% }) %>"
+                        ></i>
+                    </p>
+                </div>
+                <div class="category-single-box">
+                    <p class="category-text">
+                        <i 
+                            class="<% game.platforms.forEach(platform => { %>
+                                <%= platform.title == 'LINUX' ? 'fab fa-linux' : null %>
+                            <% }) %>"
+                        ></i>
+                    </p>
+                </div>
+                <div class="category-single-box">
+                    <p class="category-text">
+                        <i 
+                            class="<% game.platforms.forEach(platform => { %>
+                                <%= platform.title == 'VR HEADSET' ? 'fas fa-vr-cardboard' : null %>
+                            <% }) %>"
+                        ></i>
+                    </p>
+                </div>
+            </article>
+            <header class="show-title category-title">
+                <h3 class="big-title big-title-category">
+                    PLATAFORMAS
+                </h3>
+                <h6 class="small-title">
+                    PLATAFORMAS
+                </h6>
+            </header>
+        </section>
+        <% game.status.forEach(status => { %>
+            <% if (status.name == 'IN OFFER') { %>
+                <header class="show-title offer-title">
+                    <h2 class="big-title">
+                        ¡OFERTA ESPECIAL!
+                    </h2>
+                    <h4 class="small-title">
+                        ¡OFERTA ESPECIAL!
+                    </h4>
+                </header>
+                <section class="offer-display">
+                    <div class="offer-display-box original-price">
+                        <h2 class="big-title">
+                            $<%= game.price %>
+                        </h2>
+                        <h5 class="small-title">
+                            $<%= game.price %>
+                        </h5>
+                    </div>
+                    <div class="offer-display-box">
+                        <h2 class="big-title">
+                            <%= game.discount %>%
+                        </h2>
+                        <h5 class="small-title">
+                            <%= game.discount %>%
+                        </h5>
+                    </div>
+                    <div class="offer-display-box te-ahorras">
+                        <p class="saved-money-math">
+                            <span class="math-values-show"><%= game.price %></span>
+                            <span class="math-values-show"><%= game.discount %></span>
+                        </p>
+                    </div>
+                </section>
+            <% } %>
+        <% }) %>
+        <section class="pagas-box">
+            <h1 class="big-title">
+                PAGAS
+            </h1>
+            <h3 class="small-title">
+                PAGAS
+            </h3>
+        </section>
+        <section class="purchase-display">
+            <div class="purchase-price-box">
+                <h2 class="big-title new-price-math">
+                    <%= game.price - ((game.price * game.discount) / 100) %>
+                </h2>
+                <h4 class="small-title new-price-math">
+                    <%= game.price - ((game.price * game.discount) / 100) %>
+                </h4>
+            </div>
+            <a class="purchase-button-box" href="/products/cart">
+                <h2 class="big-title">
+                    <i class="fas fa-shopping-cart"></i>
+                    <i class="fas fa-money-bill-wave"></i>
+                    <i class="fas fa-credit-card"></i>
+                </h2>
+                <h4 class="small-title">
+                    <i class="fas fa-shopping-cart"></i>
+                    <i class="fas fa-money-bill-wave"></i>
+                    <i class="fas fa-credit-card"></i>
+                </h4>
+            </a>
+        </section>
+        <section class="show-long-description" id="read-more">
+            <header class="show-title">
+                <h3 class="big-title">
+                    MÁS SOBRE <%= game.title %>
+                </h3>
+                <h5 class="small-title">
+                    MÁS SOBRE <%= game.title %>
+                </h5>
+            </header>
+            <article class="show-description long-description">
+                <p>
+                    <%= game.description %>
+                </p>
+            </article>
+        </section>
+    </section>
+    <% if (locals.user && user.admin == 1) { %>
+        <header class="main-title admin-controls-title">
+            <section class="admin-main-box">
+                <div class="admin-edit-box">
+                    <a href="/products/edit/<%= game.id %>">
+                        <button class="admin-button-edit">
+                            EDITAR
+                        </button> 
+                    </a>
+                </div>
+                <form class="admin-delete-box" action="/products/<%= game.id %>?_method=DELETE" method="POST">
+                    <button class="admin-button-delete" type="submit">
+                        ELIMINAR
+                    </button>
+                </form>
+            </section>
+        </header>
+        <header class="main-title admin-controls-title">
+            <div class="store-control-box">
+                <a href="/products/create" class="store-control-link">
+                    <i class="fas fa-plus-square"></i>
+                </a>
+            </div>
+        </header>
+    <% } %>
+</main>
+<%- include('../partials/footer')%>
