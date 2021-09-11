@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    let alias = 'Artista';
+    let alias = 'Genero';
     let cols = {
         id: {
             autoIncrement: true,
@@ -7,19 +7,16 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER.UNSIGNED,
             allowNull: false
          },
-         nombre: {
+         name: {
             type: DataTypes.STRING(255),
             allowNull: false
-         },
-         apellido: {
-            type: DataTypes.STRING(255),
-            allowNull: false
-        },
+         }
+        
     };
 
      let config = {
         underscored: true,
-        tableName: 'artistas',
+        tableName: 'generos',
         timestamps: false,
         paranoid: true,
         charset: 'utf8',
@@ -27,17 +24,17 @@ module.exports = (sequelize, DataTypes) => {
             collate: 'utf8mb4_unicode:ci'
         }
     };
-     let Artista = sequelize.define(
+     let Genero = sequelize.define(
         alias,
         cols,
         config
     );
-    Artista.associate = (model) => {
-        Artista.hasMany(model.Cancion, {
+    Genero.associate = (model) => {
+        Genero.hasMany(model.Cancion, {
             as: 'canciones', // Plural
-            foreignKey: 'artista_id' // éste ID existe en una de las tablas
+            foreignKey: 'genero_id' // éste ID existe en una de las tablas
         });
     };
-    return Artista;
+    return Genero;
 };
 
